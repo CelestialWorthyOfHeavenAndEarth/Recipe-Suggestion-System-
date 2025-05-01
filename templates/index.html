@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Indian Recipe Finder</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <h1>🥘 Indian Recipe Finder</h1>
+
+  <form method="POST" class="search-form">
+    <input type="text" name="ingredients" placeholder="Enter ingredients (e.g. paneer, tomato)" required>
+    <button type="submit">Search Recipes</button>
+  </form>
+
+  {% if recipes %}
+    <div class="grid">
+      {% for meal in recipes %}
+        <div class="card">
+          <img src="{{ meal.strMealThumb }}" alt="{{ meal.strMeal }}">
+          <h3>{{ meal.strMeal }}</h3>
+          <a href="/recipe/{{ meal.idMeal }}">View Recipe</a>
+        </div>
+      {% endfor %}
+    </div>
+  {% elif request.method == 'POST' %}
+    <p style="text-align:center;">No recipes found for your ingredients. Try something else!</p>
+  {% endif %}
+</body>
+</html>
